@@ -12,7 +12,7 @@ This project involves building and deploying a Cybersecurity Threat Detection Sy
 
 ## Architecture
 The following diagram illustrates the AWS architecture used in this project:
-(colar a foto da arquitetura - desenhar depois no draw.io)'
+<img width="1052" height="486" alt="project-ai-cybersecurity-diagram" src="https://github.com/user-attachments/assets/3b776fca-de97-4e0c-a1b7-f7442d0e36d5" />
 
 ### Services Used
 
@@ -27,9 +27,11 @@ The following diagram illustrates the AWS architecture used in this project:
 1. Raw network logs are ingested into Amazon S3.
 2. Lambda processes and transforms logs into a structured dataset.
 3. The processed dataset is stored back in a new S3 bucket.
-4. SageMaker Pipelines train the XGBoost model. IAM handles permissions, CloudWatch metrics.
+4. SageMaker Pipelines train the XGBoost model.
 5. Trained model artifacts are saved to S3 for deployment.
-6. The model is deployed as a SageMaker Endpoint to detect security threats.
+6. The model is deployed as a SageMaker Endpoint to detect security threats.  
+
+*IAM manages access permissions, while CloudWatch collects and monitors system metrics.
 
 ## Project Setup
 1. Preprocess Data and Feature Engineering
@@ -201,7 +203,9 @@ df = pd.read_csv(file_name)
 df.head()
 ```
 This code downloads a preprocessed CSV file from an S3 bucket and loads it into a Pandas DataFrame for inspection.  
-(colocar a imagem 2.1 aqui)
+
+<img width="1103" height="244" alt="2 1 Load Preprocessed Data from S3" src="https://github.com/user-attachments/assets/27193992-3e16-4c8d-8525-d044c43bfd99" />
+
 
 ### 2.2 Split Data into Train/Test Sets  
 Paste this code in a new cell and run:
@@ -345,7 +349,8 @@ print("Accuracy:", accuracy_score(y_test, y_pred))
 print("Classification Report:\n", classification_report(y_test, y_pred))
 ```
 This code trains an XGBoost model locally using the same parameters as the SageMaker model and evaluates its performance on the test set by computing accuracy and a classification report.  
-(colocar imagem 2.6 Evaluate Model Performance)  
+
+<img width="436" height="176" alt="2 6 Evaluate Model Performance" src="https://github.com/user-attachments/assets/c5b165af-e70d-4c99-aa7b-266da28e91dc" />
 
 ## 3. Deploy and Serve the Model  
 Deploy the trained model on Amazon SageMaker and expose it as an API endpoint for real-time cybersecurity threat detection.  
@@ -469,7 +474,8 @@ predicted_label = "THREAT" if prediction_score > 0.5 else "SAFE"
 print(f"Prediction: {predicted_label}")
 ```
 Output:  
-(colocar imagem 3.3 Test the Deployed Endpoint)  
+
+<img width="1104" height="460" alt="3 3 Test the Deployed Endpoint" src="https://github.com/user-attachments/assets/a77f9e91-e0ac-4cbd-85a5-c695510ac5ed" />
 
 ## 4. Automating with SageMaker Pipelines  
 This step connects all the earlier parts of our project into one automated, production-grade ML workflow. It automates the entire machine learning workflow, including data preprocessing, training, evaluation, and deployment using Amazon SageMaker Pipelines.  
@@ -585,6 +591,8 @@ status = execution.describe()['PipelineExecutionStatus']
 print(f"Pipeline Status: {status}")
 ```
 
+<img width="1150" height="395" alt="4 3 Trigger the Pipeline Execution" src="https://github.com/user-attachments/assets/b20c91cc-1571-499a-96d1-e07c41ebcb36" />
+
 ### 4.4 Automate Retraining with AWS EventBridge  
 
 **Create a Lambda Function**  
@@ -682,7 +690,9 @@ What this automation does:
 4. Lambda Starts Pipeline → SageMaker pipeline begins training
 5. Automatic Retraining → Model updates without manual intervation
 
-(colocar as imagens 4.5 1 e 4.5 2)
+<img width="1903" height="679" alt="4 5 Test the Automation 2" src="https://github.com/user-attachments/assets/ffae8ed8-9b00-4938-be1c-3515ba5a6c09" />
+
+<img width="1141" height="577" alt="4 5 Test the Automation 1" src="https://github.com/user-attachments/assets/896e75c1-cca8-4166-be96-4af369a3ca66" />
 
 ## 5. Conclusion
 This project demonstrates how to build and deploy **a machine learning-based cybersecurity threat detection system** using Amazon SageMaker and other AWS services. By integrating **Amazon S3, Amazon SageMaker, AWS Lambda, Amazon CloudWatch, and SageMaker Pipelines**, we created a robust, scalable, and automated ML pipeline capable of detecting malicious network activity in near real-time.
